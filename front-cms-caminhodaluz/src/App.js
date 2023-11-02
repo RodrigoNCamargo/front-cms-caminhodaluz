@@ -1,14 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Login from './components/Login';
+import AssociadosPage from './pages/AssociadosPage';
+import Login from './pages/LoginPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Login />
-      </header>
-    </div>
+    <Router>
+      <div className="app">
+        <Routes>
+          <Route path="/associados" element={<AssociadosPage />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

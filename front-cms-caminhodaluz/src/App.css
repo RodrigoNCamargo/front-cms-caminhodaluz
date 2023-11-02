@@ -1,48 +1,39 @@
-/* App.css */
-
-.App {
-  text-align: center;
-  background-color: #f8f9fa;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: black;
+.app-container {
+    display: flex;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.sidebar {
+    width: 200px;
+    background-color: #343a40;
+    padding: 20px;
+    min-height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.sidebar a {
+    display: block;
+    color: white;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.content {
+    padding: 20px;
+    width: calc(100% - 200px);
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.app {
+
   }
-}
-
-.App-header {
-  background-color: #fff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: black;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  
+  .sidebar {
+    /* Adjust width as necessary */
+    width: 250px;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .content {
+    flex: 1;
+    overflow-y: auto; /* If you want the content area to be scrollable */
   }
-}
+  
