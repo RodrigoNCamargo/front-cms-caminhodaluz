@@ -4,7 +4,7 @@ import api from '../api';
 import logo from '../assets/logo.png'
 import './LoginPage.css'
 
-const Login = ({ onLogin }) => {
+const LoginPage = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [loading, setLoading] = useState(false);
@@ -92,4 +92,4 @@ const Login = ({ onLogin }) => {
     );
 };
 
-export default Login;
+export default LoginPage;
