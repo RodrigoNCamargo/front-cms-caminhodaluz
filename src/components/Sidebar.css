@@ -1,0 +1,28 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    background-color: #343a40;
+    padding-top: 20px;
+}
+
+#page-content-wrapper {
+    padding: 20px;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #495057;
+}
+
+.list-group-item.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
