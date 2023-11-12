@@ -1,14 +1,16 @@
 // src/pages/AssociadosPage.js
 
 import React, { useState, useEffect } from 'react';
+import InputMask from 'react-input-mask';
 import api from '../api';
 import Sidebar from '../components/Sidebar'
+import PessoaModal from '../components/pessoaModal';
 import './AssociadosPage.css';
-import { CDBCard, CDBCardBody, CDBDataTable, CDBContainer } from 'cdbreact';
 import DataTable from '../components/DataTable';
-
+import { CDBCollapse, CDBBtn } from 'cdbreact';
 
 const AssociadosPage = () => {
+
     const [associados, setAssociados] = useState({
         columns: [
             {
@@ -41,16 +43,17 @@ const AssociadosPage = () => {
         ], rows: []
     });
     const [escolaridades, setEscolaridades] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [profissao, setProfissao] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [filters, setFilters] = useState({
-        inscricao: '',
-        pessoa: '',
-        socio: '',
-        escolaridade: '',
-        profissao: '',
-        sexo: '',
-    })
+    const [filters, setFilters] = useState({})
+    const [showFilters, setShowFilters] = useState(false);
+
+    const toggleFilters = () => {
+        setShowFilters(!showFilters)
+        console.log(showFilters);
+    };
+
     function testClickEvent(param) {
         alert('Row Click Event');
     }
@@ -88,15 +91,24 @@ const AssociadosPage = () => {
         };
 
         fetchEscolaridades();
+
+        const fetchProfissao = async () => {
+            try {
+                const response = await api.get('/profissao'); // Replace with your actual endpoint
+                const transformedProfissao = response.data.map(item => ({
+                    id: item.profissao_id,
+                    label: item.descricao,
+                }));
+                setProfissao(transformedProfissao);
+            } catch (err) {
+                setError('An error occurred while fetching the profissao.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfissao();
     }, []);
-
-
-    const profissoes = [
-        { id: 1, label: 'Engenheiro' },
-        { id: 2, label: 'Médico' },
-        // ...
-    ];
-
 
 
     const handleInputChange = (event) => {
@@ -127,15 +139,17 @@ const AssociadosPage = () => {
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className='contentContainer'>
-                <h2>Associados</h2>
+                <h2>Pessoas</h2>
+                <h3>Filtro de pesquisa</h3>
                 <form className="row g-4 needs-validation" onSubmit={handleSubmit}>
                     <div className="col-md-3">
-                        <label htmlFor="pessoa" className="form-label">Nome</label>
+                        <label htmlFor="pessoa_name" className="form-label">Nome</label>
                         <input
                             type="text"
                             className="form-control"
                             id="pessoa_name"
                             name="pessoa_name"
+                            placeholder="Nome"
                             value={filters.pessoa_name}
                             onChange={handleInputChange}
                         />
@@ -157,6 +171,7 @@ const AssociadosPage = () => {
                             <option value="4">Inativo</option>
                         </select>
                     </div>
+
                     <div className="col-md-3">
                         <label htmlFor="escolaridade" className="form-label">Escolaridade</label>
                         <select
@@ -176,13 +191,13 @@ const AssociadosPage = () => {
                         <label htmlFor="profissao" className="form-label">Profissão</label>
                         <select
                             className="form-select"
-                            id="profissao"
-                            name="profissao"
-                            value={filters.profissao}
+                            id="profissao_id"
+                            name="profissao_id"
+                            value={filters.profissao_id}
                             onChange={handleInputChange}
                         >
                             <option value="">Selecione...</option>
-                            {profissoes.map(p => (
+                            {profissao.map(p => (
                                 <option key={p.id} value={p.id}>{p.label}</option>
                             ))}
                         </select>
@@ -217,42 +232,51 @@ const AssociadosPage = () => {
                         </select>
                     </div>
                     <div className="col-md-3">
-                        <select
-                            className="form-select"
-                            id="sexo"
-                            name="sexo"
-                            value={filters.sexo}
+                        <label htmlFor="cpf" className="form-label">CPF</label>
+                        <InputMask
+                            type="text"
+                            mask="999.999.999-99"
+                            placeholder="CPF"
+                            maskChar="0"
+                            className="form-control"
+                            id="cpf"
+                            name="cpf"
+                            value={filters.cpf}
                             onChange={handleInputChange}
-                        >
-                            <option value="">Selecione um campo de pesquisa</option>
-                            <option value="cpf">CPF</option>
-                            <option value="rg">RG</option>
-                            <option value="telefone1">Telefone 1</option>
-                            <option value="telefone2">Telefone 2</option>
-                            <option value="celular">Celular</option>
-                            <option value="endereco">Endereço</option>
-                            <option value="formado_em">Formação Acadêmica</option>
-                        </select>
-                        <input
+                        />
+                    </div>
+                    <div className="col-md-3">
+                        <label htmlFor="rg" className="form-label">RG</label>
+                        <InputMask
                             type="text"
                             className="form-control"
-                            id="pessoa_name"
-                            name="pessoa_name"
-                            value={filters.pessoa_name}
+                            mask="9999999999"
+                            placeholder="RG"
+                            maskChar="0"
+                            id="rg"
+                            name="rg"
+                            value={filters.rg}
                             onChange={handleInputChange}
                         />
                     </div>
 
-                    <div className="col-md-3">
+
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button type="submit" className="btn btn-primary">Buscar</button>
+
+                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
+                            Criar novo
+                        </button>
                     </div>
 
                 </form>
 
 
-
-
                 <DataTable data={associados} />
+
+                <PessoaModal />
+
+
             </div>
         </div>
 
