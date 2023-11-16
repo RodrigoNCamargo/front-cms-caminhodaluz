@@ -1,0 +1,11 @@
+.modal-body{
+    padding: 30px;
+}
+video {
+    width: 300px;
+    margin: 20px;
+}
+
+label {
+    font-weight: normal;
+}
