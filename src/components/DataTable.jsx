@@ -12,7 +12,7 @@ const DataTable = ({
             <CDBCardBody>
                 <CDBDataTable
                     noBottomColumn
-                    infoLabel={["Mostrando", "de", "dos", "registros"]}
+                    infoLabel={["Mostrando de", "até", "dos", "registros"]}
                     paginationLabel={["Voltar", "Próximo"]}
                     entriesLabel="Número de linhas"
                     searchLabel="Pesquisar"

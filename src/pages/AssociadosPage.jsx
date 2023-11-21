@@ -237,7 +237,8 @@ const AssociadosPage = () => {
                             type="text"
                             mask="999.999.999-99"
                             placeholder="CPF"
-                            maskChar="0"
+                            maskChar="_"
+                            alwaysShowMask={false}
                             className="form-control"
                             id="cpf"
                             name="cpf"
@@ -252,7 +253,7 @@ const AssociadosPage = () => {
                             className="form-control"
                             mask="9999999999"
                             placeholder="RG"
-                            maskChar="0"
+                            maskChar="_"
                             id="rg"
                             name="rg"
                             value={filters.rg}
