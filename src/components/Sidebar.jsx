@@ -12,7 +12,7 @@ import logo from '../assets/w-logo.png';
 
 const Sidebar = () => {
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden',  box_sizing: 'border-box' }}>
       <CDBSidebar textColor="#fff" backgroundColor="#333">
         <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
           <div className="container" style={{ display: 'flex', alignItems: 'center' }}>

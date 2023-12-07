@@ -1,6 +1,6 @@
 import React from 'react';
 import { CDBCardBody, CDBDataTable, CDBContainer } from 'cdbreact';
-
+import './DataTable.css';
 const DataTable = ({
     data,
     entriesOptions = [5, 10, 20],
